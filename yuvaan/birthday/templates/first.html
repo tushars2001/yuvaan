@@ -207,16 +207,16 @@ Come and make the occasion further special with your presence.
 <input type="hidden" name="guest" value="{{guest_detail.guest_id}}">
 <div class="row">
     <div class="col text-center">
-        Adults <input type="number" min="0" name="adults" style="width:20%" class="bginput" value="{{rsvp_details.0.adults}}">
+        Adults <input type="number" min="0" name="adults" style="width:20%" class="bginput" value="{{rsvp_details.0.adults}}" required>
     </div>
     <div class="col text-center">
-        Kids <input type="number" min="0" name="kids" style="width:20%" class="bginput" value="{{rsvp_details.0.kids}}">
+        Kids <input type="number" min="0" name="kids" style="width:20%" class="bginput" value="{{rsvp_details.0.kids}}" required>
     </div>
 </div>
 <div class="row">
     <div class="col"></div>
     <div class="col-9">
-       <span style="font-size: 1.5em"> &#128077;</span> We will be there! <input type="radio" name="status" value="Yes" class="bginput" {% if rsvp_details.0.status == 'Yes' %} checked {% endif %}>
+       <span style="font-size: 1.5em"> &#128077;</span> We will be there! <input type="radio" name="status" value="Yes" class="bginput" checked>
     </div>
     <div class="col"></div>
 </div>
