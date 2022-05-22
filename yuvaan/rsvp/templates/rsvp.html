@@ -50,14 +50,15 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 </style>
-
+ <p><a href="/manage/guests/">Guests</a> </p>
+    <p><a href="/rsvp/">RSVP Status</a> </p>
 <h1>RSVP List</h1>
 <table class="rbstable">
     <tr>
-        <td>Guest</td>
-        <td>Adults</td>
-        <td>Kids</td>
-        <td>Status</td>
+        <th>Guest</th>
+        <th>Adults</th>
+        <th>Kids</th>
+        <th>Status</th>
     </tr>
     {% for guest in rsvp %}
         <tr>
@@ -66,6 +67,27 @@
             <td>{{guest.kids}}</td>
             <td>{{guest.status}}</td>
         </tr>
+    {% endfor %}
+</table>
+
+<br>
+<h2>RSVP Numbers </h2>
+<table class="rbstable">
+    <tr>
+        <th>Coming</th>
+        <th>Totals</th>
+        <th>Adults</th>
+        <th>Kids</th>
+
+    </tr>
+    {% for rec in rsvp_totals %}
+    <tr>
+        <td>{{ rec.status }}</td>
+        <td>{{ rec.totals }}</td>
+        <td>{{ rec.adults }}</td>
+        <td>{{ rec.kids }}</td>
+
+    </tr>
     {% endfor %}
 </table>
 {% endblock %}

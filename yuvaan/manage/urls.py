@@ -25,8 +25,10 @@ from . import views
 admin.autodiscover()
 
 urlpatterns = [
-    path('', views.rsvp),
-    path('invitations/', views.invitations),
+    path('', views.manage_home),
+    path('guests/', views.guests),
+    path('login/', views.login),
+    path('', views.rsvp_status),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

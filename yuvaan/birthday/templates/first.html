@@ -2,6 +2,17 @@
 {% load static%}
 {% block content %}
 <style type="text/css" media="Screen">
+
+.blink_me {
+  animation: color-change 1s infinite;
+}
+
+@keyframes color-change {
+  0% { color: black; }
+  50% { color: red; }
+  100% { color: blue; }
+}
+
 * .sized {
     table-layout: auto;
   width: 100%;
@@ -137,6 +148,11 @@ video {
 </div>
 --->
 <div class="row">
+    <div class="col text-center">
+        <h3>YAY! I am Turning 1</h3>
+    </div>
+</div>
+<div class="row">
     <div class="col">
         <img class="img-fluid img-responsive" src="{% static 'images/uv.gif' %}">
     </div>
@@ -156,6 +172,13 @@ Come and make the occasion further special with your presence.
     </div>
 </div>
 <div class="row">
+    <div class="col text-center blink_me" style="font-size:1.25em">
+        Date: Sat, July, 16<br>
+        Time: 5:30 PM
+        <br><br>
+    </div>
+</div>
+<div class="row">
     <div class="col text-center">
         Olmsted Club House<br>
             13125 Long Common Pkwy<br>
@@ -168,10 +191,17 @@ Come and make the occasion further special with your presence.
 </div>
 <div class="row">
     <div class="col text-center">
-        <p>Please RSVP below</p>
-        {% if rsvp_details %}<p>Your RSVP is registered. You may update the same.</p>{% endif %}
+        <p style="font-size:.75em; color:white">Theme: Hawaiian [ as of now :) ]. Will update you if plan changes. </p>
     </div>
 </div>
+<div class="row">
+    <div class="col text-center">
+        <p onclick="$('#rsvp_form').slideToggle()">Tap to RSVP</p>
+    </div>
+</div>
+
+<div id="rsvp_form" style="display:none">
+    {% if rsvp_details %}<p>Your RSVP is registered. You may update the same.</p>{% endif %}
 <form method="post" action="./">
 {% csrf_token %}
 <input type="hidden" name="guest" value="{{guest_detail.guest_id}}">
@@ -206,10 +236,13 @@ Come and make the occasion further special with your presence.
 </div>
 <div class="row">
     <div class="col text-center">
-        <button class="bginput" type="submit" style="width:80%">GO!</button>
+        <button class="bginput" type="submit" style="width:80%">GO!</button><br>
     </div>
 </div>
+
+<br><br>
 </form>
+</div>
 {% else %}
     <div class="row">
         <div class="col text-center">
@@ -220,6 +253,11 @@ Come and make the occasion further special with your presence.
     <div class="row">
         <div class="col text-center">
         <p>We sent unique link to our guests as invitation and RSVP.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+        <a href="/manage/login/">Manage Event</a>
         </div>
     </div>
 {% endif %}

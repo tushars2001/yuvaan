@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import sys
-import environ
 import pymysql
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -64,6 +63,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, "yuvaan/admin/templates"),
             os.path.join(BASE_DIR, "yuvaan/birthday/templates"),
             os.path.join(BASE_DIR, "yuvaan/rsvp/templates"),
+            os.path.join(BASE_DIR, "yuvaan/manage/templates"),
         ]
         ,
         'APP_DIRS': True,
@@ -156,10 +156,10 @@ AUTHENTICATION_BACKENDS = (
 # This should setting should walk the path
 # back to the project's root (e.g. where manage.py exists)
 # Three folder back (/config/settings/.env - 3 = /)
-root = environ.Path(__file__) - 3
+# root = environ.Path(__file__) - 3
 
 # Initialize root function
-PROJECT_ROOT = root()
+# PROJECT_ROOT = root()
 
 # Initialize Env function
 # Environ requires variable casting.
@@ -172,10 +172,10 @@ ENV_CAST = {
     'STAFF_STATUS': (bool, False),
     'DEBUG': (bool, True),
 }
-env = environ.Env(**ENV_CAST)
+# env = environ.Env(**ENV_CAST)
 
 # Reads the .env file
-env.read_env()
+# env.read_env()
 
 # Set the system path to the base application folder.
 # This may not be required in your project.

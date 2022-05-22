@@ -21,10 +21,32 @@ def get_all_rsvp():
             `rsvp`.`kids`,
             `rsvp`.`status`,
             guests.invitee as guest_name from
-            yuvaan.rsvp rsvp, yuvaan.guests guests
-            where guests.guest_id = rsvp.guest_id;
+            yuvaan.rsvp rsvp right join yuvaan.guests guests
+            on guests.guest_id = rsvp.guest_id and rsvp.active = 1;
 
     """
+    with connection.cursor() as cursor:
+        cursor.execute(sql)
+        data = dict_fetchall(cursor)
+        cursor.close()
+
+    return data
+
+
+def get_all_rsvp_status():
+    data = []
+    sql = """
+               select sum(adults) adults, sum(kids) kids, sum(adults) + sum(kids) totals, 
+               `status` from yuvaan.rsvp where active = 1
+                group by status
+                        union
+            select sum(adults_expected) adults, sum(kids_expected) kids, sum(adults_expected) + sum(kids_expected) totals,
+            'Not Responded' as status 
+            from yuvaan.guests where guest_id not in 
+            (
+                select guest_id from yuvaan.rsvp where active = 1
+            )
+        """
     with connection.cursor() as cursor:
         cursor.execute(sql)
         data = dict_fetchall(cursor)

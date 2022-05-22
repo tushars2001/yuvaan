@@ -7,7 +7,9 @@ from . import models
 
 def rsvp(request):
     rsvp_data = models.get_all_rsvp()
-    return render(request, 'rsvp.html', {'rsvp': rsvp_data})
+    rsvp_totals = models.get_all_rsvp_status()
+    return render(request, 'rsvp.html', {'rsvp': rsvp_data,
+                                         'rsvp_totals': rsvp_totals})
 
 
 def invitations(request):

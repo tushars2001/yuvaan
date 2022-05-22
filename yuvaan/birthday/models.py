@@ -28,6 +28,7 @@ def get_guest_by_id(guest_id):
 
 
 def register_rsvp(fields):
+    sql_inactive = """ update `yuvaan`.`rsvp` set active = 0 where guest_id = %(guest)s """
     sql = """
     INSERT INTO `yuvaan`.`rsvp`
     (
@@ -46,6 +47,7 @@ def register_rsvp(fields):
     """
 
     with connection.cursor() as cursor:
+        cursor.execute(sql_inactive, fields)
         cursor.execute(sql, fields)
         cursor.close()
 

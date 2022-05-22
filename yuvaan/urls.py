@@ -20,24 +20,9 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import include
 from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
 from .birthday import views
 
 admin.autodiscover()
-
-
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,6 +30,7 @@ urlpatterns = [
     path('turning-1/', views.first),
     path('birthday/', include('yuvaan.birthday.urls')),
     path('rsvp/', include('yuvaan.rsvp.urls')),
+    path('manage/', include('yuvaan.manage.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
