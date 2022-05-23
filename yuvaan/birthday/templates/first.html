@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
 <style type="text/css" media="Screen">
 
 .blink_me {
@@ -85,7 +86,9 @@ video {
 
 <script>
   $(document).ready(function() {
-    $("#vid").get(0).play();
+    party.confetti(document.getElementById('confetti'),{
+    count: 100,gravity: 8
+    });
   });
 </script>
 
@@ -149,11 +152,11 @@ video {
 --->
 <div class="row">
     <div class="col text-center">
-        <h3>YAY! I am Turning 1</h3>
+        <h3 id="confetti">Aloha! I am Turning 1</h3>
     </div>
 </div>
 <div class="row">
-    <div class="col">
+    <div class="col text-center">
         <img class="img-fluid img-responsive" src="{% static 'images/uv.gif' %}">
     </div>
 </div>
