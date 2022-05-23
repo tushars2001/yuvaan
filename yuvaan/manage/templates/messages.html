@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+    <p><a href="/manage/guests/">Guests</a> </p>
+    <p><a href="/rsvp/">RSVP Status</a> </p>
+
+<style type="text/css" media="Screen">
+* .sized {
+    table-layout: auto;
+  width: 100%;
+}
+
+* .p1 {
+  width: 20%;
+  background: pink;
+}
+
+* .p2 {
+  width: 80%;
+  background: gold;
+}
+
+* .p3 {
+  width: 50%;
+  vertical-align: top;
+
+}
+
+.msgbox {
+    margin:4px, 4px;
+    padding:4px;
+    height: 140px;
+    overflow-y: hidden;
+    text-align:justify;
+}
+
+.msgbox:hover {
+  overflow-y: scroll;
+}
+
+.msgbox::-webkit-scrollbar {
+    width: 3px;
+    margin: 6px;
+}
+
+.msgbox::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 6px;
+}
+
+.msgbox::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+</style>
+<h1>{{ request.GET.message }}</h1>
+<h1>Guest List</h1>
+
+{% for message in message_data %}
+<p><a href="{{message.link}}">{{message.name}}</a> </p>
+{% endfor %}
+
+<div onclick="$('#add_guest').toggle()">Add Guest</div>
+<div id="add_guest" style="display:none">
+    <form method="post" action="./">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="add">
+    <table class="rbstable">
+        <tr>
+            <td>Guest ID</td>
+            <td><input type="number" name="guest_id" value=""></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="invitee" value=""></td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td><input type="number" name="phone" value=""></td>
+        </tr>
+        <tr>
+            <td>Adults Expected</td>
+            <td><input type="number" name="adults_expected" value=""></td>
+        </tr>
+        <tr>
+            <td>Kids Expected</td>
+            <td><input type="number" name="kids_expected" value=""></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Add</button> </td>
+        </tr>
+    </table>
+    </form>
+</div>
+<table class="rbstable">
+    <tr>
+        <td>Guest</td>
+        <td>Phone</td>
+        <td>Adults Expected</td>
+        <td>Kids Expected</td>
+        <td>Status</td>
+        <td></td>
+    </tr>
+    {% for guest in guest_details %}
+        <tr>
+            <form method="post" action="./">
+            {% csrf_token %}
+            <input type="hidden" name="guest_id" value="{{guest.guest_id}}">
+            <input type="hidden" name="action" value="update">
+            <td><input type="text" name="invitee" value="{{guest.invitee}}"></td>
+            <td><input type="text" name="phone" value="{{guest.phone}}"></td>
+            <td><input type="text" name="adults_expected" value="{{guest.adults_expected}}"></td>
+            <td><input type="text" name="kids_expected" value="{{guest.kids_expected}}"></td>
+            <td><input type="text" name="status" value="{{guest.status}}"></td>
+            <td><button type="submit">Update</button></td>
+            </form>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -28,6 +28,7 @@ urlpatterns = [
     path('', views.manage_home),
     path('guests/', views.guests),
     path('login/', views.login),
+    path('messages/', views.messages),
     path('', views.rsvp_status),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

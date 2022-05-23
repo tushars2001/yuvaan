@@ -49,3 +49,15 @@ def update_guest(fields):
         cursor.execute(sql, fields)
         cursor.close()
     return True
+
+
+def get_all_messages():
+    sql = """
+    select invitee as name, concat('https://api.whatsapp.com/send/?phone=13186801012&text=We%20invite%20you%20to%20Yuvann%27s%20Birthday.%20Details%20and%20RSVP%20here:%20https://yuvaan.world/turning-1/?guest=',guest_id,'&app_absent=0') link
+ from guests"""
+
+    with connection.cursor() as cursor:
+        cursor.execute(sql)
+        data = dict_fetchall(cursor)
+        cursor.close()
+    return data

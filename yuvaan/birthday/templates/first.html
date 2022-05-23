@@ -91,6 +91,14 @@ video {
     count: 100,gravity: 8
     });
   });
+
+  function tap_rsvp(){
+    $('#rsvp_form').slideToggle();
+    $('html,body').animate({
+            scrollTop: $(".second").offset().top},
+            'slow');
+  }
+
 </script>
 
 
@@ -163,10 +171,60 @@ video {
 </div>
 {% if guest_detail %}
 <div class="row">
+    <div class="col text-center blink_me" style="background-color:yellow">
+        <p onclick="tap_rsvp();"><span>Tap Here to RSVP</span></p>
+    </div>
+</div>
+
+
+<div id="rsvp_form" style="display:none">
+        {% if rsvp_details %}<p>Your RSVP is registered. You may update the same.</p>{% endif %}
+    <form method="post" action="./">
+    {% csrf_token %}
+    <input type="hidden" name="guest" value="{{guest_detail.guest_id}}">
+    <div class="row">
+        <div class="col text-center">
+            Adults <input type="number" min="0" name="adults" style="width:20%" class="bginput" value="{{rsvp_details.0.adults}}" required>
+        </div>
+        <div class="col text-center">
+            Kids <input type="number" min="0" name="kids" style="width:20%" class="bginput" value="{{rsvp_details.0.kids}}" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-9">
+           <span style="font-size: 1.5em"> &#128077;</span> We will be there! <input type="radio" name="status" value="Yes" class="bginput" checked>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-9">
+            <span style="font-size: 1.5em"> &#128542;</span> We can't make it. <input type="radio" name="status" value="No" class="bginput" {% if rsvp_details.0.status == 'No' %} checked {% endif %}>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-9">
+            <span style="font-size: 1.5em"> &#128533;</span> We will try but not sure! <input type="radio" name="status" value="May Be" class="bginput" {% if rsvp_details.0.status == 'May Be' %} checked {% endif %}>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <button class="bginput" type="submit" style="width:80%">GO!</button><br>
+        </div>
+    </div>
+    <div class="second"></div>
+    <br><br>
+    </form>
+</div>
+<div class="row">
     <div class="col text-center">
         <br><p>Dear {{guest_detail.invitee}}</p>
         <p class="text-center">
-            We take immense pleasure to invite you as we celebrate Yuvaan’s birthday.
+            We take immense pleasure to invite you as we celebrate Yuvaan’s FIRST birthday.
             <!--As he learns to crawl around, we know he is growing by leaps and bounds.
 It is time to celebrate his first year, with cakes, balloons and galore!!-->
 Come and make the occasion further special with your presence.
@@ -190,7 +248,7 @@ Come and make the occasion further special with your presence.
         <a href="https://goo.gl/maps/eJGrjTU9sph9hoP47" style="color:black">
             Directions
         </a>
-        <br><br>
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1035.558245396876!2d-80.7943865!3d35.3855041!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88541d4c72fcc93b%3A0x6cc813b65a14e1fc!2s13125%20Long%20Common%20Pkwy%2C%20Huntersville%2C%20NC%2028078!5e1!3m2!1sen!2sus!4v1653347910765!5m2!1sen!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        <br><br>
     </div>
 </div>
 <div class="row">
@@ -198,55 +256,7 @@ Come and make the occasion further special with your presence.
         <p style="font-size:.75em; color:white">Theme: Hawaiian [ as of now :) ]. Will update you if plan changes. </p>
     </div>
 </div>
-<div class="row">
-    <div class="col text-center">
-        <p onclick="$('#rsvp_form').slideToggle()">Tap to RSVP</p>
-    </div>
-</div>
 
-<div id="rsvp_form" style="display:none">
-    {% if rsvp_details %}<p>Your RSVP is registered. You may update the same.</p>{% endif %}
-<form method="post" action="./">
-{% csrf_token %}
-<input type="hidden" name="guest" value="{{guest_detail.guest_id}}">
-<div class="row">
-    <div class="col text-center">
-        Adults <input type="number" min="0" name="adults" style="width:20%" class="bginput" value="{{rsvp_details.0.adults}}" required>
-    </div>
-    <div class="col text-center">
-        Kids <input type="number" min="0" name="kids" style="width:20%" class="bginput" value="{{rsvp_details.0.kids}}" required>
-    </div>
-</div>
-<div class="row">
-    <div class="col"></div>
-    <div class="col-9">
-       <span style="font-size: 1.5em"> &#128077;</span> We will be there! <input type="radio" name="status" value="Yes" class="bginput" checked>
-    </div>
-    <div class="col"></div>
-</div>
-<div class="row">
-    <div class="col"></div>
-    <div class="col-9">
-        <span style="font-size: 1.5em"> &#128542;</span> We can't make it. <input type="radio" name="status" value="No" class="bginput" {% if rsvp_details.0.status == 'No' %} checked {% endif %}>
-    </div>
-    <div class="col"></div>
-</div>
-<div class="row">
-    <div class="col"></div>
-    <div class="col-9">
-        <span style="font-size: 1.5em"> &#128533;</span> We will try but not sure! <input type="radio" name="status" value="May Be" class="bginput" {% if rsvp_details.0.status == 'May Be' %} checked {% endif %}>
-    </div>
-    <div class="col"></div>
-</div>
-<div class="row">
-    <div class="col text-center">
-        <button class="bginput" type="submit" style="width:80%">GO!</button><br>
-    </div>
-</div>
-
-<br><br>
-</form>
-</div>
 {% else %}
     <div class="row">
         <div class="col text-center">

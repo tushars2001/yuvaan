@@ -31,3 +31,8 @@ def guests(request):
 
 def rsvp_status(request):
     return redirect("/rsvp/")
+
+
+def messages(request):
+    message_data = models.get_all_messages()
+    return render(request, "messages.html", {'message_data': message_data})
