@@ -102,63 +102,6 @@ video {
 </script>
 
 
-
-<!-- 1. The <iframe> (video player) will replace this <div> tag. -->
-
-
-<!--<script>
-  // 2. This code loads the IFrame Player API code asynchronously.
-  var tag = document.createElement('script');
-
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  // 3. This function creates an <iframe> (and YouTube player)
-  //    after the API code downloads.
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      videoId: 'vLVRtFKtZew',
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  // 4. The API will call this function when the video player is ready.
-  function onPlayerReady(event) {
-    event.target.mute();
-    event.target.playVideo();
-  }
-
-  // 5. The API calls this function when the player's state changes.
-  //    The function indicates that when playing a video (state=1),
-  //    the player should play for six seconds and then stop.
-  var done = false;
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING && !done) {
-      setTimeout(stopVideo, 6000);
-      done = true;
-    }
-  }
-  function stopVideo() {
-   // player.stopVideo();
-  }
-</script> -->
-<!--
-<iframe src="https://www.youtube.com/embed/vLVRtFKtZew?autoplay=1&mute=1&loop=1"
-        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-        style="background-image: url('https://mdbootstrap.com/img/Photos/Others/architecture.webp'); background-repeat: no-repeat; background-size: cover; background-position: center center;"
-
-<div class="row">
-    <div id="player" class="col embed-responsive embed-responsive-16by9">
-
-    </div>
-</div>
---->
 <div class="row">
     <div class="col text-center">
         <h3 id="confetti"><img class="img-fluid img-responsive" src="{% static 'images/aloha.png' %}"></h3>
@@ -170,15 +113,17 @@ video {
     </div>
 </div>
 {% if guest_detail %}
+<div class="second"></div>
 <div class="row">
-    <div class="col text-center blink_me" style="background-color:yellow">
-        <p onclick="tap_rsvp();"><span>Tap Here to RSVP</span></p>
+    <div class="col text-center" style="background-color:yellow">
+        <span onclick="tap_rsvp();" class="blink_me">Tap Here to RSVP</span>
+        {% if rsvp_details %}<br><span style="font-size:0.5em">Your did RSVP previously. You may update the same.</span>{% endif %}
     </div>
 </div>
 
 
 <div id="rsvp_form" style="display:none">
-        {% if rsvp_details %}<p>Your RSVP is registered. You may update the same.</p>{% endif %}
+
     <form method="post" action="./">
     {% csrf_token %}
     <input type="hidden" name="guest" value="{{guest_detail.guest_id}}">
@@ -216,10 +161,11 @@ video {
             <button class="bginput" type="submit" style="width:80%">GO!</button><br>
         </div>
     </div>
-    <div class="second"></div>
+
     <br><br>
     </form>
 </div>
+
 <div class="row">
     <div class="col text-center">
         <br><p>Dear {{guest_detail.invitee}}</p>
@@ -251,9 +197,9 @@ Come and make the occasion further special with your presence.
 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1035.558245396876!2d-80.7943865!3d35.3855041!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88541d4c72fcc93b%3A0x6cc813b65a14e1fc!2s13125%20Long%20Common%20Pkwy%2C%20Huntersville%2C%20NC%2028078!5e1!3m2!1sen!2sus!4v1653347910765!5m2!1sen!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        <br><br>
     </div>
 </div>
-<div class="row">
+<div class="row" style="display:none">
     <div class="col text-center">
-        <p style="font-size:.75em; color:white">Theme: Hawaiian [ as of now :) ]. Will update you if plan changes. </p>
+        <p style="font-size:.75em; color:black">Theme: Hawaiian [ as of now :) ]. Will update you if plan changes. </p>
     </div>
 </div>
 
