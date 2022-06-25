@@ -7,7 +7,7 @@ from . import models
 # Create your views here.
 
 
-@login_required(login_url='/manage/login/')
+@login_required(login_url='/admin/', redirect_field_name='next')
 def manage_home(request):
     return render(request, "manage_home.html")
 
@@ -18,6 +18,7 @@ def login(request):
     return render(request, "login.html")
 
 
+@login_required(login_url='/admin/')
 def guests(request):
     guest_details = get_all_invitations()
     if request.method == 'POST' and 'action' in request.POST and request.POST['action'] == 'add':
@@ -33,6 +34,7 @@ def rsvp_status(request):
     return redirect("/rsvp/")
 
 
+@login_required(login_url='/admin/')
 def messages(request):
     message_data = models.get_all_messages()
     return render(request, "messages.html", {'message_data': message_data})

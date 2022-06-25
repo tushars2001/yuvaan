@@ -64,8 +64,8 @@
     {% for guest in rsvp %}
         <tr>
             <td>{{guest.guest_name}}</td>
-            <td>{{guest.adults}}</td>
-            <td>{{guest.kids}}</td>
+            <td>{{guest.adults}} ({{guest.adults_expected}})</td>
+            <td>{{guest.kids}} ({{guest.kids_expected}})</td>
             <td>{{guest.status}}</td>
         </tr>
     {% endfor %}

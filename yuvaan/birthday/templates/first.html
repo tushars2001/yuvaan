@@ -88,15 +88,32 @@ video {
 <script>
   $(document).ready(function() {
     party.confetti(document.getElementById('confetti'),{
-    count: 100,gravity: 8
+        count: 100,gravity: 8
+    });
+    setInterval(function () {
+        party.confetti(document.getElementById('confetti'),{
+            count: 60,gravity: 8
+        });
+    }, 6000);
+
+    $("#clickontap").click(function() {
+        $('#rsvp_form').slideToggle('slow', function(){
+
+        });
+
     });
   });
 
   function tap_rsvp(){
-    $('#rsvp_form').slideToggle();
-    $('html,body').animate({
-            scrollTop: $(".second").offset().top},
+    console.log($("#scrolldiv").offset().top);
+    $('#rsvp_form').slideToggle('slow', function(){
+       console.log($("#scrolldiv").offset().top);
+       $('html').animate({
+            scrollTop: $("#scrolldiv").offset().top},
             'slow');
+        //document.getElementById("scrolldiv").scrollIntoView();
+
+    });
   }
 
 </script>
@@ -113,10 +130,10 @@ video {
     </div>
 </div>
 {% if guest_detail %}
-<div class="second"></div>
+<div class="second" id="scrolldiv"></div>
 <div class="row">
     <div class="col text-center" style="background-color:yellow">
-        <span onclick="tap_rsvp();" class="blink_me">Tap Here to RSVP</span>
+        <span onclick="$('#rsvp_form').slideToggle()" class="blink_me">Tap Here to RSVP</span>
         {% if rsvp_details %}<br><span style="font-size:0.5em">Your did RSVP previously. You may update the same.</span>{% endif %}
     </div>
 </div>
@@ -129,10 +146,10 @@ video {
     <input type="hidden" name="guest" value="{{guest_detail.guest_id}}">
     <div class="row">
         <div class="col text-center">
-            Adults <input type="number" min="0" name="adults" style="width:20%" class="bginput" value="{{rsvp_details.0.adults}}" required>
+            Adults <input type="number" min="0" name="adults" id="adults" style="width:20%" class="bginput" value="{{rsvp_details.0.adults}}" required>
         </div>
         <div class="col text-center">
-            Kids <input type="number" min="0" name="kids" style="width:20%" class="bginput" value="{{rsvp_details.0.kids}}" required>
+            Kids <input type="number" min="0" name="kids" id="kids" style="width:20%" class="bginput" value="{{rsvp_details.0.kids}}" required>
         </div>
     </div>
     <div class="row">
@@ -145,7 +162,7 @@ video {
     <div class="row">
         <div class="col"></div>
         <div class="col-9">
-            <span style="font-size: 1.5em"> &#128542;</span> We can't make it. <input type="radio" name="status" value="No" class="bginput" {% if rsvp_details.0.status == 'No' %} checked {% endif %}>
+            <span style="font-size: 1.5em"> &#128542;</span> We can't make it. <input type="radio" name="status" onclick="$('#kids').val('0');$('#adults').val('0');" value="No" class="bginput" {% if rsvp_details.0.status == 'No' %} checked {% endif %}>
         </div>
         <div class="col"></div>
     </div>
@@ -188,18 +205,24 @@ Come and make the occasion further special with your presence.
 </div>
 <div class="row">
     <div class="col text-center">
+        Place:<br>
         Olmsted Club House<br>
             13125 Long Common Pkwy<br>
            Huntersville, NC 28078<br>
         <a href="https://goo.gl/maps/eJGrjTU9sph9hoP47" style="color:black">
             Directions
         </a>
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1035.558245396876!2d-80.7943865!3d35.3855041!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88541d4c72fcc93b%3A0x6cc813b65a14e1fc!2s13125%20Long%20Common%20Pkwy%2C%20Huntersville%2C%20NC%2028078!5e1!3m2!1sen!2sus!4v1653347910765!5m2!1sen!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>        <br><br>
-    </div>
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1035.558245396876!2d-80.7943865!3d35.3855041!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88541d4c72fcc93b%3A0x6cc813b65a14e1fc!2s13125%20Long%20Common%20Pkwy%2C%20Huntersville%2C%20NC%2028078!5e1!3m2!1sen!2sus!4v1653347910765!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    </div>
 </div>
 <div class="row" style="display:none">
     <div class="col text-center">
         <p style="font-size:.75em; color:black">Theme: Hawaiian [ as of now :) ]. Will update you if plan changes. </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col text-center" style="background-color:yellow">
+        <span onclick="$('#rsvp_form').show();document.getElementById('scrolldiv').scrollIntoView();" class="blink_me">Tap Here to RSVP</span>
+        {% if rsvp_details %}<br><span style="font-size:0.5em">Your did RSVP previously. You may update the same.</span>{% endif %}
     </div>
 </div>
 
@@ -217,7 +240,7 @@ Come and make the occasion further special with your presence.
     </div>
     <div class="row">
         <div class="col text-center">
-        <a href="/manage/login/">Manage Event</a>
+        <a href="/manage/">Manage Event</a>
         </div>
     </div>
 {% endif %}

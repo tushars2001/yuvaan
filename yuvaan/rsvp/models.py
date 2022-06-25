@@ -20,9 +20,13 @@ def get_all_rsvp():
             `rsvp`.`adults`,
             `rsvp`.`kids`,
             `rsvp`.`status`,
-            guests.invitee as guest_name from
+            guests.invitee as guest_name,
+             guests.kids_expected,
+            guests.adults_expected
+             from
             yuvaan.rsvp rsvp right join yuvaan.guests guests
-            on guests.guest_id = rsvp.guest_id and rsvp.active = 1;
+            on guests.guest_id = rsvp.guest_id and rsvp.active = 1
+            order by `rsvp`.`status`, guests.invitee;
 
     """
     with connection.cursor() as cursor:
@@ -37,8 +41,13 @@ def get_all_rsvp_status():
     data = []
     sql = """
                select sum(adults) adults, sum(kids) kids, sum(adults) + sum(kids) totals, 
-               `status` from yuvaan.rsvp where active = 1
+               `status` from yuvaan.rsvp where active = 1 and status = 'Yes'
                 group by status
+                        union
+                select sum(g.adults_expected) adults, sum(kids_expected) kids, sum(adults_expected) + sum(kids_expected) totals, 
+               r.`status` from yuvaan.rsvp r, yuvaan.guests g where r.guest_id = g.guest_id and  r.active = 1 and 
+               r.status = 'No'
+                group by r.status
                         union
             select sum(adults_expected) adults, sum(kids_expected) kids, sum(adults_expected) + sum(kids_expected) totals,
             'Not Responded' as status 
